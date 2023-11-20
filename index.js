@@ -3,27 +3,25 @@ const app = express();
 const PORT = process.env.PORT || 3306;
 const cors = require("cors");
 const dotenv = require("dotenv");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const mongoose = require("mongoose");
+const router = require("./routes");
 
 dotenv.config();
-const client = new MongoClient(
-  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}?retryWrites=true&w=majority`,
-  {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    },
-  }
-);
+
+mongoose
+  .connect(
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}?retryWrites=true&w=majority`
+  )
+  .then(() => console.log("connected to db"))
+  .catch((err) => console.log(`db connection error: ${err}`));
 
 app.use(
   cors({
     origin: "*",
   })
 );
-
 app.use(express.json());
+app.use("/api", router);
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "working" });
@@ -31,12 +29,6 @@ app.get("/", (req, res) => {
 
 const start = async () => {
   try {
-    await client.connect();
-    await client.db().createCollection("users");
-    const users = client.db().collection("users");
-    await users.insertOne({ name: "ivan", age: 21 });
-    const user = await users.findOne({ name: "ivan" });
-    console.log(user);
     app.listen(PORT, () => console.log("start", PORT));
   } catch (e) {
     console.log(e);
