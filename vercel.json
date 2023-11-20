@@ -1,5 +1,5 @@
 {
   "build": {
-    "script": "npm start"
+    "installCommand": "npm i && npm start"
   }
 }
