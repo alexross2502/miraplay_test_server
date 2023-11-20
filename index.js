@@ -32,6 +32,7 @@ app.get("/", (req, res) => {
 const start = async () => {
   try {
     await client.connect();
+    console.log("good");
     app.listen(PORT, () => console.log("start", PORT));
   } catch (e) {
     console.log(e);
