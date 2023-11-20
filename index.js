@@ -32,7 +32,11 @@ app.get("/", (req, res) => {
 const start = async () => {
   try {
     await client.connect();
-    console.log("good");
+    await client.db().createCollection("users");
+    const users = client.db().collection("users");
+    await users.insertOne({ name: "ivan", age: 21 });
+    const user = await users.findOne({ name: "ivan" });
+    console.log(user);
     app.listen(PORT, () => console.log("start", PORT));
   } catch (e) {
     console.log(e);
