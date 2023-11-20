@@ -1,10 +1,12 @@
 const Users = require("../models/users.js");
+const auth = require("../utils/auth.js");
+const passwordHash = require("../utils/passwordHash.js");
 
 async function check(req, res) {
   try {
     let { login, password } = req.body;
-    const user = await Users.findOne({ login, password });
-    if (!!user) {
+    let result = await auth.loginAndPasswordCheck(login, password);
+    if (result) {
       res.status(200).json("true").end();
     } else {
       res.status(400).json({ message: "Wrong login or password" });
@@ -17,7 +19,8 @@ async function check(req, res) {
 async function registration(req, res) {
   try {
     let { login, password } = req.body;
-    const user = new Users({ login, password });
+    let hashedPassword = await passwordHash(password);
+    const user = new Users({ login, password: hashedPassword });
     await user.save();
     res.status(200).json(user).end();
   } catch (e) {
