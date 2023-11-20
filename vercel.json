@@ -1,3 +1,3 @@
 {
-  "installCommand": "npm i && npm start"
+  "installCommand": "npm i && node index.js"
 }
