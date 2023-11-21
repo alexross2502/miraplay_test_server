@@ -1,5 +1,6 @@
 const Users = require("../models/users.js");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 class Auth {
   async loginAndPasswordCheck(login, passwordFromRequest) {
@@ -14,6 +15,11 @@ class Auth {
     } else {
       return false;
     }
+  }
+
+  async createToken(login) {
+    let token = jwt.sign({ login }, "dev-jwt", { expiresIn: 60 * 60 * 3 });
+    return `Bearer ${token}`;
   }
 }
 

@@ -7,12 +7,13 @@ async function check(req, res) {
     let { login, password } = req.body;
     let result = await auth.loginAndPasswordCheck(login, password);
     if (result) {
-      res.status(200).json("true").end();
+      let token = await auth.createToken(login);
+      res.status(200).json(token).end();
     } else {
       res.status(400).json({ message: "Wrong login or password" });
     }
   } catch (e) {
-    return res.status(400).json({ message: e.message }).end();
+    res.status(400).json({ message: e.message }).end();
   }
 }
 
@@ -25,9 +26,9 @@ async function registration(req, res) {
     res.status(200).json(user).end();
   } catch (e) {
     if (e.code === 11000) {
-      return res.status(400).json({ message: "Login already exists." }).end();
+      res.status(400).json({ message: "Login already exists." }).end();
     }
-    return res.status(400).json({ message: e.message }).end();
+    res.status(400).json({ message: e.message }).end();
   }
 }
 
