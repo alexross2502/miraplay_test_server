@@ -27,8 +27,9 @@ async function registration(req, res) {
   } catch (e) {
     if (e.code === 11000) {
       res.status(400).json({ message: "Login already exists." }).end();
+    } else {
+      res.status(400).json({ message: e.message }).end();
     }
-    res.status(400).json({ message: e.message }).end();
   }
 }
 
