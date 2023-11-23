@@ -21,7 +21,7 @@ mongoose
 //   })
 // );
 const corsOptions = {
-  origin: "*",
+  origin: "http://localhost:3306",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
