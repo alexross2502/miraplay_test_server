@@ -15,13 +15,8 @@ mongoose
   .then(() => console.log("connected to db"))
   .catch((err) => console.log(`db connection error: ${err}`));
 
-// app.use(
-//   cors({
-//     origin: "*",
-//   })
-// );
 const corsOptions = {
-  origin: "http://localhost:3306",
+  origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
