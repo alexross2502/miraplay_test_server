@@ -10,8 +10,7 @@
     {
       "src": "/api/.*",
       "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-      "headers": "Origin, X-Requested-With, Content-Type, Accept",
-      "maxAge": 86400
+      "headers": "Origin, X-Requested-With, Content-Type, Accept"
     }
   ]
 }
