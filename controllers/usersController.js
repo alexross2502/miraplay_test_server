@@ -33,8 +33,4 @@ async function registration(req, res) {
   }
 }
 
-async function test(req, res) {
-  res.status(200).json("1111111").end();
-}
-
-module.exports = { check, registration, test };
+module.exports = { check, registration };
